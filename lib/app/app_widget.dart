@@ -1,6 +1,7 @@
-import 'package:demo_stonks/app/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import 'base/app_strings.dart';
 
 class AppWidget extends StatelessWidget {
   @override

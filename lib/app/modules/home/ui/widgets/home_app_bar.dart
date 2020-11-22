@@ -1,8 +1,7 @@
-import 'package:demo_stonks/app/app_dimens.dart';
+import 'package:demo_stonks/app/base/app_dimens.dart';
+import 'package:demo_stonks/app/base/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../../../app_strings.dart';
 
 class HomeAppBar extends StatelessWidget {
   final tempValue = 1030991.86;

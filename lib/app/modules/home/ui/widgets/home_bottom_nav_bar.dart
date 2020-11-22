@@ -1,7 +1,8 @@
-import 'package:demo_stonks/app/app_dimens.dart';
-import 'package:flutter/material.dart';
+import 'dart:math';
 
-import '../../../../app_strings.dart';
+import 'package:demo_stonks/app/base/app_dimens.dart';
+import 'package:demo_stonks/app/base/app_strings.dart';
+import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {
   @override
@@ -62,8 +63,8 @@ class BottomNavBar extends StatelessWidget {
                           vertical: 1.0,
                           horizontal: 5.0,
                         ),
-                        child: const Text(
-                          '8',
+                        child: Text(
+                          '${Random().nextInt(9) + 1}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12.0,
