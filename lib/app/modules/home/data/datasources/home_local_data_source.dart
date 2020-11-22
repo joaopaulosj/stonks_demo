@@ -1,12 +1,17 @@
 import 'dart:math';
 
 import 'package:demo_stonks/app/modules/home/domain/models/balance.dart';
+import 'package:demo_stonks/app/modules/home/domain/models/user.dart';
 
 class HomeLocalDataSource {
   List<int> sessionValues = [];
 
   HomeLocalDataSource() {
     sessionValues = generateRandomValues();
+  }
+
+  User getUser() {
+    return User(id: 8, name: 'Abel');
   }
 
   Balance getBalance() {

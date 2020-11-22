@@ -7,7 +7,9 @@ part of 'home_controller.dart';
 // **************************************************************************
 
 final $HomeController = BindInject(
-  (i) => HomeController(getBalanceUsecase: i<GetBalanceUsecase>()),
+  (i) => HomeController(
+      getBalanceUsecase: i<GetBalanceUsecase>(),
+      getUserUsecase: i<GetUserUsecase>()),
   singleton: true,
   lazy: true,
 );
@@ -34,10 +36,26 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$userStateAtom = Atom(name: '_HomeControllerBase.userState');
+
+  @override
+  UIState get userState {
+    _$userStateAtom.reportRead();
+    return super.userState;
+  }
+
+  @override
+  set userState(UIState value) {
+    _$userStateAtom.reportWrite(value, super.userState, () {
+      super.userState = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
-balanceState: ${balanceState}
+balanceState: ${balanceState},
+userState: ${userState}
     ''';
   }
 }

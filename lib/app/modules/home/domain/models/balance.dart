@@ -31,5 +31,5 @@ class Balance {
 
   double get buyingPower => totalValue * 0.3;
 
-  double get balance => initialValue + totalValue;
+  double get value => initialValue + totalValue;
 }
