@@ -75,7 +75,7 @@ class HomeBalanceHeader extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${formatCurrency.format(state.balance.totalValue.floor())}',
+                        '${formatCurrency.format(state.balance.totalValueDiff.floor())}',
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,

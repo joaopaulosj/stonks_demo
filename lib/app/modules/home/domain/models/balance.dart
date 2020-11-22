@@ -1,12 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 
 class Balance {
   final List<int> values;
-  final double initialValue = Random().nextInt(1000000) + 500000.0;
 
-  Balance({@required this.values});
+  Balance({@required this.values}) {
+    print('initial: ${values.first}');
+    print('final: ${values.last}');
+  }
 
   List<int> get todayValues =>
       values.sublist((values.length * 0.9).round(), values.length);
@@ -23,13 +23,13 @@ class Balance {
   List<int> get yearValues =>
       values.sublist((values.length * 0.2).round(), values.length);
 
-  double get todayPercent => todayValues.last / todayValues.first - 1;
+  double get todayPercent => (todayValues.last / todayValues.first - 1) * 100;
 
-  double get totalPercent => values.last / values.first - 1;
+  double get totalPercent => (values.last / values.first - 1) * 100;
 
-  double get totalValue => totalPercent * initialValue;
+  double get totalValueDiff => (values.last - values.first).toDouble();
 
-  double get buyingPower => totalValue * 0.3;
+  double get buyingPower => totalValueDiff * 0.3;
 
-  double get value => initialValue + totalValue;
+  double get value => values.first + totalValueDiff;
 }

@@ -27,9 +27,13 @@ abstract class _HomeControllerBase with Store {
   @observable
   UIState userState = InitialState();
 
+  @observable
+  UIState chartState = InitialState();
+
   void onInit() {
     _loadBalance();
     _loadUser();
+    _loadChart();
   }
 
   void _loadBalance() {
@@ -40,6 +44,18 @@ abstract class _HomeControllerBase with Store {
   void _loadUser() {
     final user = getUserUsecase();
     userState = UserState(user);
+  }
+
+  void _loadChart() {
+    final state = balanceState;
+    if (state is BalanceState) {
+      chartState = ChartState(
+        type: ChartType.day,
+        values: state.balance.values,
+      );
+    } else {
+      chartState = ChartState(type: ChartType.day, values: []);
+    }
   }
 }
 
@@ -54,3 +70,12 @@ class UserState implements UIState {
 
   UserState(this.user);
 }
+
+class ChartState implements UIState {
+  final List<int> values;
+  final ChartType type;
+
+  ChartState({@required this.type, @required this.values});
+}
+
+enum ChartType { day, week, month, threeMonths, year, all }

@@ -51,11 +51,27 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$chartStateAtom = Atom(name: '_HomeControllerBase.chartState');
+
+  @override
+  UIState get chartState {
+    _$chartStateAtom.reportRead();
+    return super.chartState;
+  }
+
+  @override
+  set chartState(UIState value) {
+    _$chartStateAtom.reportWrite(value, super.chartState, () {
+      super.chartState = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 balanceState: ${balanceState},
-userState: ${userState}
+userState: ${userState},
+chartState: ${chartState}
     ''';
   }
 }
