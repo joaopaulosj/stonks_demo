@@ -57,8 +57,8 @@ class HomeAppBar extends StatelessWidget {
             ClipOval(
               child: Image.asset(
                 'assets/avatars/avatar_8.jpg',
-                height: 40.0,
-                width: 40.0,
+                height: 32.0,
+                width: 32.0,
               ),
             )
           ],

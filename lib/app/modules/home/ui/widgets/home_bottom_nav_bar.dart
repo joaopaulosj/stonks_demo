@@ -26,7 +26,6 @@ class BottomNavBar extends StatelessWidget {
           icon: Padding(
             padding: const EdgeInsets.only(
               bottom: kMarginSmall,
-              right: 6.0,
               top: 4.0,
             ),
             child: const Icon(Icons.home_outlined),
@@ -37,7 +36,6 @@ class BottomNavBar extends StatelessWidget {
           icon: Padding(
             padding: const EdgeInsets.only(
               bottom: kMarginSmall,
-              right: 6.0,
               top: 4.0,
             ),
             child: const Icon(Icons.chat_outlined),
@@ -85,7 +83,6 @@ class BottomNavBar extends StatelessWidget {
           icon: Padding(
             padding: const EdgeInsets.only(
               bottom: kMarginSmall,
-              right: 6.0,
               top: 4.0,
             ),
             child: const Icon(Icons.search),
