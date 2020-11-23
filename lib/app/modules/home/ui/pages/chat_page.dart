@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:demo_stonks/app/base/app_dimens.dart';
@@ -22,6 +23,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends ModularState<ChatPage, ChatController> {
   final _formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 2);
   var _showWarning = Random().nextInt(2) == 0;
+  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -147,6 +149,7 @@ class _ChatPageState extends ModularState<ChatPage, ChatController> {
                   return ListView.separated(
                     reverse: true,
                     itemCount: state.messages.length,
+                    controller: _scrollController,
                     itemBuilder: (_, index) {
                       final message = state.messages.reversed.toList()[index];
                       return ChatMessageWidget(message);
@@ -165,7 +168,7 @@ class _ChatPageState extends ModularState<ChatPage, ChatController> {
               },
             ),
           ),
-          _TextField(),
+          _TextField(_scrollController),
         ],
       ),
     );
@@ -206,6 +209,10 @@ class _UnreadSeparator extends StatelessWidget {
 }
 
 class _TextField extends StatefulWidget {
+  final ScrollController scrollController;
+
+  _TextField(this.scrollController);
+
   @override
   _TextFieldState createState() => _TextFieldState();
 }
@@ -300,6 +307,11 @@ class _TextFieldState extends State<_TextField> {
                     setState(() {
                       _canSend = false;
                     });
+
+                    Timer(
+                      Duration(milliseconds: 500),
+                      () => widget.scrollController.jumpTo(0.0),
+                    );
                   }
                 },
                 child: Padding(
