@@ -1,4 +1,6 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:demo_stonks/app/base/app_dimens.dart';
+import 'package:demo_stonks/app/base/app_strings.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/chart_value.dart';
 import 'package:demo_stonks/app/modules/home/ui/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -10,19 +12,33 @@ class HomeChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Modular.get<HomeController>();
     return SliverToBoxAdapter(
-      child: Container(
-        height: 200,
-        child: Observer(
-          builder: (context) {
-            final state = controller.chartState;
-
-            if (state is ChartState) {
-              return SimpleLineChart(_createChartData(state.values));
-            } else {
-              return Container();
-            }
-          },
-        ),
+      child: Observer(
+        builder: (context) {
+          final state = controller.chartState;
+          if (state is ChartState) {
+            return Column(
+              children: [
+                Container(
+                  height: 200,
+                  child: SimpleLineChart(_createChartData(state.values)),
+                ),
+                SizedBox(height: kMarginDefault),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: ChartType.values
+                      .map((type) => _ChartTypeButton(
+                            type: type,
+                            isSelected: type == state.type,
+                            onClick: () => controller.onChartTypeClicked(type),
+                          ))
+                      .toList(),
+                ),
+              ],
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
     );
   }
@@ -52,6 +68,45 @@ class HomeChart extends StatelessWidget {
   }
 }
 
+class _ChartTypeButton extends StatelessWidget {
+  final ChartType type;
+  final bool isSelected;
+  final VoidCallback onClick;
+
+  const _ChartTypeButton({
+    @required this.type,
+    @required this.isSelected,
+    @required this.onClick,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onClick,
+      child: Container(
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.green : null,
+          borderRadius: BorderRadius.all(
+            Radius.circular(4.0),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: kMarginDetail,
+            horizontal: kMarginSmall,
+          ),
+          child: Text(
+            AppStrings.chartTypeText(type),
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.green,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class SimpleLineChart extends StatelessWidget {
   final List<charts.Series> seriesList;
 
@@ -64,7 +119,7 @@ class SimpleLineChart extends StatelessWidget {
       animate: true,
       layoutConfig: charts.LayoutConfig(
         leftMarginSpec: charts.MarginSpec.fixedPixel(0),
-        rightMarginSpec: charts.MarginSpec.fixedPixel(64),
+        rightMarginSpec: charts.MarginSpec.fixedPixel(32),
         topMarginSpec: charts.MarginSpec.fixedPixel(0),
         bottomMarginSpec: charts.MarginSpec.fixedPixel(0),
       ),

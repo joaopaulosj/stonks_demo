@@ -1,3 +1,5 @@
+import 'package:demo_stonks/app/modules/home/ui/controllers/home_controller.dart';
+
 class AppStrings {
   static const appName = 'Stonks Demo';
 
@@ -32,4 +34,21 @@ class AppStrings {
   static const String chatMembersText = '18,923 members';
   static const String chatUnread = 'Unread';
   static const String chatFieldHint = 'Type a Message';
+
+  static String chartTypeText(ChartType type) {
+    switch (type) {
+      case ChartType.day:
+        return homeChartTabDay;
+      case ChartType.week:
+        return homeChartTabWeek;
+      case ChartType.month:
+        return homeChartTabMonth;
+      case ChartType.threeMonths:
+        return homeChartTabThreeMonths;
+      case ChartType.year:
+        return homeChartTabYear;
+      default:
+        return homeChartTabAll;
+    }
+  }
 }

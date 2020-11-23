@@ -50,12 +50,19 @@ abstract class _HomeControllerBase with Store {
     final state = balanceState;
     if (state is BalanceState) {
       chartState = ChartState(
-        type: ChartType.day,
-        values: state.balance.values,
+        type: ChartType.all,
+        values: state.balance.getValuesFromType(ChartType.all),
       );
     } else {
       chartState = ChartState(type: ChartType.day, values: []);
     }
+  }
+
+  void onChartTypeClicked(ChartType type) {
+    chartState = ChartState(
+      type: type,
+      values: (balanceState as BalanceState).balance.getValuesFromType(type),
+    );
   }
 }
 

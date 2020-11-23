@@ -24,7 +24,7 @@ class HomeLocalDataSource {
     list.add(first);
 
     var index = 1;
-    while (index < 60) {
+    while (index < 100) {
       final value = list[index - 1] + (Random().nextInt(70000) - 30000);
       list.add(value);
       index++;
