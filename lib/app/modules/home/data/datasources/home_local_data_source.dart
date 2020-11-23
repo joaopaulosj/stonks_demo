@@ -7,25 +7,19 @@ import 'package:demo_stonks/app/modules/home/domain/models/portfolio.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/user.dart';
 
 class HomeLocalDataSource {
-  List<int> sessionValues = [];
-
-  HomeLocalDataSource() {
-    sessionValues = _generateRandomValues();
-  }
-
   User getUser() {
     return User(id: 8, name: 'Abel');
   }
 
   Balance getBalance() {
-    return Balance(values: sessionValues);
+    return Balance(values: _generateRandomValues(100));
   }
 
   List<Portfolio> getPortfolio() {
     return _getCompanies().map((company) {
       return Portfolio(
         company: company,
-        values: [1240, 984, 784, 1435],
+        values: _generateRandomValues(10),
         messages: [
           Message(text: 'First'),
           Message(
@@ -46,13 +40,13 @@ class HomeLocalDataSource {
     ];
   }
 
-  List<int> _generateRandomValues() {
+  List<int> _generateRandomValues(int count) {
     final list = <int>[];
     final first = (Random().nextInt(50) + 50) * 10000;
     list.add(first);
 
     var index = 1;
-    while (index < 100) {
+    while (index < count) {
       final value = list[index - 1] + (Random().nextInt(70000) - 30000);
       list.add(value);
       index++;

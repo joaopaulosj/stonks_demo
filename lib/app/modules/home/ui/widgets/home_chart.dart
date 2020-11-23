@@ -20,7 +20,7 @@ class HomeChart extends StatelessWidget {
               children: [
                 Container(
                   height: 200,
-                  child: SimpleLineChart(_createChartData(state.values)),
+                  child: SimpleLineChart(state.values, endMargin: 32),
                 ),
                 SizedBox(height: kMarginDefault),
                 Row(
@@ -42,30 +42,6 @@ class HomeChart extends StatelessWidget {
         },
       ),
     );
-  }
-
-  List<charts.Series<ChartValue, int>> _createChartData(List<int> values) {
-    List<ChartValue> getPoints() {
-      var i = 0;
-      final baseValue = values.first;
-      return values.map((e) {
-        return ChartValue(i++, e - baseValue);
-      }).toList();
-    }
-
-    final color = values.last - values.first > 0
-        ? charts.MaterialPalette.green.shadeDefault
-        : charts.MaterialPalette.red.shadeDefault;
-
-    return [
-      charts.Series<ChartValue, int>(
-        id: 'Values',
-        colorFn: (_, __) => color,
-        domainFn: (ChartValue chartValue, _) => chartValue.index,
-        measureFn: (ChartValue chartValue, _) => chartValue.value,
-        data: getPoints(),
-      )..setAttribute(charts.rendererIdKey, 'customArea'),
-    ];
   }
 }
 
@@ -109,18 +85,19 @@ class _ChartTypeButton extends StatelessWidget {
 }
 
 class SimpleLineChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
+  final List<int> values;
+  final int endMargin;
 
-  SimpleLineChart(this.seriesList);
+  SimpleLineChart(this.values, {this.endMargin = 0});
 
   @override
   Widget build(BuildContext context) {
     return charts.LineChart(
-      seriesList,
+      _createChartData(values),
       animate: true,
       layoutConfig: charts.LayoutConfig(
         leftMarginSpec: charts.MarginSpec.fixedPixel(0),
-        rightMarginSpec: charts.MarginSpec.fixedPixel(32),
+        rightMarginSpec: charts.MarginSpec.fixedPixel(endMargin),
         topMarginSpec: charts.MarginSpec.fixedPixel(0),
         bottomMarginSpec: charts.MarginSpec.fixedPixel(0),
       ),
@@ -138,5 +115,29 @@ class SimpleLineChart extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  List<charts.Series<ChartValue, int>> _createChartData(List<int> values) {
+    List<ChartValue> getPoints() {
+      var i = 0;
+      final baseValue = values.first;
+      return values.map((e) {
+        return ChartValue(i++, e - baseValue);
+      }).toList();
+    }
+
+    final color = values.last - values.first > 0
+        ? charts.MaterialPalette.green.shadeDefault
+        : charts.MaterialPalette.red.shadeDefault;
+
+    return [
+      charts.Series<ChartValue, int>(
+        id: 'Values',
+        colorFn: (_, __) => color,
+        domainFn: (ChartValue chartValue, _) => chartValue.index,
+        measureFn: (ChartValue chartValue, _) => chartValue.value,
+        data: getPoints(),
+      )..setAttribute(charts.rendererIdKey, 'customArea'),
+    ];
   }
 }

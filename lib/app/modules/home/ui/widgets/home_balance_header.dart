@@ -107,7 +107,7 @@ class _PercentText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${value.toStringAsFixed(2)}%',
+      '${value.abs().toStringAsFixed(2)}%',
       style: TextStyle(
         color: value > 0 ? Colors.green : Colors.red,
         fontSize: 16.0,

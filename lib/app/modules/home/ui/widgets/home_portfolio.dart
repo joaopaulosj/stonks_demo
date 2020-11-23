@@ -2,6 +2,7 @@ import 'package:demo_stonks/app/base/app_dimens.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/portfolio.dart';
 import 'package:demo_stonks/app/modules/home/ui/controllers/home_controller.dart';
 import 'package:demo_stonks/app/modules/home/ui/widgets/home_bottom_nav_bar.dart';
+import 'package:demo_stonks/app/modules/home/ui/widgets/home_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -78,6 +79,12 @@ class _PortfolioItem extends StatelessWidget {
                         ),
                       ),
                     Spacer(),
+                    Container(
+                      height: 20.0,
+                      width: 40.0,
+                      child: SimpleLineChart(portfolio.values),
+                    ),
+                    SizedBox(width: kMarginDefault),
                     _PercentValue(portfolio: portfolio),
                   ],
                 ),
@@ -130,7 +137,7 @@ class _PercentValue extends StatelessWidget {
               color: Colors.white,
             ),
             Text(
-              '${portfolio.percent.toStringAsFixed(1)}%',
+              '${portfolio.percent.abs().toStringAsFixed(1)}%',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
