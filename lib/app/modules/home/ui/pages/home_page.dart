@@ -6,6 +6,7 @@ import 'package:demo_stonks/app/modules/home/ui/widgets/home_chart.dart';
 import 'package:demo_stonks/app/modules/home/ui/widgets/home_portfolio.dart';
 import 'package:demo_stonks/app/modules/home/ui/widgets/home_top_posts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../controllers/home_controller.dart';
@@ -20,6 +21,11 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   void initState() {
     super.initState();
     controller.onInit();
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+    ));
   }
 
   @override
