@@ -5,6 +5,7 @@ import 'package:demo_stonks/app/modules/home/ui/widgets/chat_message_widget.dart
 import 'package:demo_stonks/app/modules/shared/widgets/arrow_icon_widget.dart';
 import 'package:demo_stonks/app/modules/shared/widgets/percent_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
@@ -216,11 +217,26 @@ class _TextField extends StatelessWidget {
           padding: const EdgeInsets.all(kMarginDefault),
           child: Row(
             children: [
-              Icon(Icons.message),
-              SizedBox(width: kMarginDefault),
-              Icon(Icons.message),
-              SizedBox(width: kMarginDefault),
-              Icon(Icons.message),
+              SvgPicture.asset(
+                'assets/icons/ic_mention.svg',
+                height: 24.0,
+                width: 24.0,
+                color: Colors.black87,
+              ),
+              SizedBox(width: 24.0),
+              SvgPicture.asset(
+                'assets/icons/ic_gallery.svg',
+                height: 24.0,
+                width: 24.0,
+                color: Colors.black87,
+              ),
+              SizedBox(width: 24.0),
+              SvgPicture.asset(
+                'assets/icons/ic_gif.svg',
+                height: 24.0,
+                width: 24.0,
+                color: Colors.black87,
+              ),
               Spacer(),
               Icon(Icons.send),
             ],

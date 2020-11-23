@@ -142,38 +142,41 @@ class AddEmojiWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipOval(
-      child: Container(
-        height: 30,
-        width: 30,
-        color: Colors.grey[200],
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(kMarginDetail),
-            child: Stack(
-              children: [
-                const Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Icon(
-                    Icons.emoji_emotions_outlined,
-                    color: Colors.black87,
-                    size: 20,
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: ClipOval(
-                    child: Container(
-                      color: Colors.grey[200],
-                      child: const Icon(
-                        Icons.add_outlined,
-                        size: 10,
-                        color: Colors.black87,
-                      ),
+      child: InkWell(
+        onTap: () {},
+        child: Container(
+          height: 30,
+          width: 30,
+          color: Colors.grey[200],
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(kMarginDetail),
+              child: Stack(
+                children: [
+                  const Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Icon(
+                      Icons.emoji_emotions_outlined,
+                      color: Colors.black87,
+                      size: 20,
                     ),
                   ),
-                )
-              ],
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: ClipOval(
+                      child: Container(
+                        color: Colors.grey[200],
+                        child: const Icon(
+                          Icons.add_outlined,
+                          size: 10,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
