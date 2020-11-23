@@ -1,7 +1,9 @@
 import 'package:demo_stonks/app/base/app_states.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/balance.dart';
+import 'package:demo_stonks/app/modules/home/domain/models/portfolio.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/user.dart';
 import 'package:demo_stonks/app/modules/home/domain/usecases/get_balance_usecase.dart';
+import 'package:demo_stonks/app/modules/home/domain/usecases/get_portfolio_usecase.dart';
 import 'package:demo_stonks/app/modules/home/domain/usecases/get_user_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -15,10 +17,12 @@ class HomeController = _HomeControllerBase with _$HomeController;
 abstract class _HomeControllerBase with Store {
   final GetBalanceUsecase getBalanceUsecase;
   final GetUserUsecase getUserUsecase;
+  final GetPortfolioUsecase getPortfolioUsecase;
 
   _HomeControllerBase({
     @required this.getBalanceUsecase,
     @required this.getUserUsecase,
+    @required this.getPortfolioUsecase,
   });
 
   @observable
@@ -64,6 +68,8 @@ abstract class _HomeControllerBase with Store {
       values: (balanceState as BalanceState).balance.getValuesFromType(type),
     );
   }
+
+  List<Portfolio> get getPortfolio => getPortfolioUsecase();
 }
 
 class BalanceState implements UIState {

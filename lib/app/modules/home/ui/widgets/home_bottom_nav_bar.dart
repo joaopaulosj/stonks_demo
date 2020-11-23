@@ -1,10 +1,12 @@
-import 'dart:math';
-
 import 'package:demo_stonks/app/base/app_dimens.dart';
 import 'package:demo_stonks/app/base/app_strings.dart';
+import 'package:demo_stonks/app/modules/home/ui/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class BottomNavBar extends StatelessWidget {
+  final controller = Modular.get<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -55,25 +57,7 @@ class BottomNavBar extends StatelessWidget {
                 Positioned(
                   top: 0,
                   right: 0,
-                  child: ClipOval(
-                    child: Container(
-                      color: Colors.blueAccent,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 1.0,
-                          horizontal: 5.0,
-                        ),
-                        child: Text(
-                          '${Random().nextInt(9) + 1}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: UnreadWidget(8),
                 )
               ],
             ),
@@ -90,6 +74,35 @@ class BottomNavBar extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class UnreadWidget extends StatelessWidget {
+  final int count;
+
+  const UnreadWidget(this.count);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipOval(
+      child: Container(
+        color: Colors.blueAccent,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 1.0,
+            horizontal: 5.0,
+          ),
+          child: Text(
+            '$count',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

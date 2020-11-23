@@ -30,7 +30,10 @@ class HomeBuyingPower extends StatelessWidget {
                       children: [
                         Text(AppStrings.homeBuyingPowerTitle),
                         Spacer(),
-                        Text(_formatCurrency.format(state.balance.buyingPower)),
+                        Text(
+                          _formatCurrency.format(state.balance.buyingPower),
+                          style: TextStyle(fontSize: 14.0),
+                        ),
                         Icon(Icons.chevron_right),
                       ],
                     ),
