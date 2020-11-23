@@ -31,9 +31,12 @@ class AppStrings {
   }
 
   static const String chatTradeButton = 'Trade';
+
   static String chatMembersText(int count) => '$count members';
   static const String chatUnread = 'Unread';
   static const String chatFieldHint = 'Type a Message';
+  static const String chatWarning =
+      'Restore your position in 21 days, or you will be kicked out...';
 
   static String chartTypeText(ChartType type) {
     switch (type) {

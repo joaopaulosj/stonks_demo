@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:demo_stonks/app/base/app_dimens.dart';
 import 'package:demo_stonks/app/base/app_strings.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/portfolio.dart';
@@ -21,6 +23,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final _formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 2);
+  var _showWarning = Random().nextInt(2) == 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +34,34 @@ class _ChatPageState extends State<ChatPage> {
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 1.0,
         centerTitle: false,
+        bottom: _showWarning
+            ? PreferredSize(
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _showWarning = false;
+                    });
+                  },
+                  child: Container(
+                    color: Colors.red,
+                    height: 40.0,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: kMarginSmall,
+                        ),
+                        child: Text(
+                          AppStrings.chatWarning,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                preferredSize: Size.fromHeight(40.0),
+              )
+            : null,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
