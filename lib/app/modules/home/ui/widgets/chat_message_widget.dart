@@ -1,4 +1,5 @@
 import 'package:demo_stonks/app/base/app_dimens.dart';
+import 'package:demo_stonks/app/base/app_strings.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/message.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/reaction.dart';
 import 'package:flutter/material.dart';
@@ -64,10 +65,76 @@ class ChatMessageWidget extends StatelessWidget {
                 SizedBox(height: kMarginSmall),
                 if (message.reactions?.isNotEmpty ?? false)
                   _Reactions(message: message),
+                if (message.replies.isNotEmpty) _Replies(message: message)
               ],
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class _Replies extends StatelessWidget {
+  const _Replies({
+    Key key,
+    @required this.message,
+  }) : super(key: key);
+
+  final Message message;
+
+  @override
+  Widget build(BuildContext context) {
+    var index = 0;
+    return Row(
+      children: [
+        Container(
+          height: 36.0,
+          width: message.replies.length == 1
+              ? 36.0
+              : message.replies.length * 28.0,
+          child: Stack(
+            children: message.replies
+                .map(
+                  (e) => _ReplyWidget(e, index++),
+                )
+                .toList(),
+          ),
+        ),
+        SizedBox(width: kMarginSmall),
+        Text(
+          AppStrings.chatReplies(message.replies.length),
+          style: TextStyle(
+            color: Colors.blueAccent,
+            fontWeight: FontWeight.w500,
+            fontSize: 16.0,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ReplyWidget extends StatelessWidget {
+  final Message reply;
+  final int index;
+
+  _ReplyWidget(this.reply, this.index);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: 24.0 * index,
+      child: ClipOval(
+        child: Container(
+          height: 36.0,
+          width: 36.0,
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: ClipOval(child: Image.asset(reply.user.picture)),
+          ),
+        ),
       ),
     );
   }
@@ -125,7 +192,7 @@ class ReactionWidget extends StatelessWidget {
               Text(
                 reaction.count.toString(),
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                   color:
                       reaction.isSelected ? Colors.blueAccent : Colors.black87,
                 ),

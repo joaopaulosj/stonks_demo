@@ -7,8 +7,16 @@ class Message {
   final User user;
   final String hour;
   List<Reaction> reactions;
+  List<Message> replies;
 
-  Message({this.id, this.text, this.user, this.hour, this.reactions});
+  Message({
+    this.id,
+    this.text,
+    this.user,
+    this.hour,
+    this.reactions,
+    this.replies = const [],
+  });
 
   List<Reaction> getSortedReactions() {
     reactions.sort((a, b) => b.count.compareTo(a.count));

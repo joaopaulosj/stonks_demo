@@ -18,64 +18,19 @@ class HomeLocalDataSource {
   }
 
   List<Portfolio> getPortfolio() {
-    final list = _getCompanies().map((company) {
-      return Portfolio(
+    final portfolio = <Portfolio>[];
+    _getCompanies().forEach((company) {
+      portfolio.add(Portfolio(
         company: company,
         values: _generateRandomValues(10),
-        messages: [
-          Message(
-            text:
-                '''Interesting. Maybe I'll try it again. I figured paypal was dead just waiting for someone to admit it.''',
-            user: _getUsers()[Random().nextInt(_getUsers().length)],
-            hour: '6:66 PM',
-          ),
-          Message(
-            text: 'Especially these days',
-            user: _getUsers()[Random().nextInt(_getUsers().length)],
-            hour: '6:66 PM',
-          ),
-          Message(
-            text:
-                'Tech stocks up 5% holy moly *&ˆ*&ˆ*&ˆ. What a time to be alive. Who cares if its a bubble? Ride and roll baby! ⚡️⚡️⚡',
-            user: _getUsers()[Random().nextInt(_getUsers().length)],
-            hour: '6:66 PM',
-          ),
-          Message(
-            text: 'Bring in the Russian money pls. Comes with Vodka 💉 🍅🍹',
-            user: _getUsers()[Random().nextInt(_getUsers().length)],
-            hour: '6:66 PM',
-          ),
-          Message(
-            text:
-                '''Let's make a call here. João is a great mobile developer and the best option for any startup that uses Flutter.''',
-            user: _getUsers()[Random().nextInt(_getUsers().length)],
-            hour: '6:66 PM',
-            reactions: [
-              Reaction('👏', [1, 3, 5]),
-              Reaction('🎉 ', [3, 5, 8]),
-              Reaction('👍🏽', [1, 2, 4, 3, 7]),
-            ],
-          ),
-          Message(
-            text:
-                '''The tech heavy Nasdaq under performed last week as we saw a rotation out of defensive tech stocks into shares more exposed to economic growth on the back of the vaccine news.''',
-            user: _getUsers()[Random().nextInt(_getUsers().length)],
-            hour: '6:66 PM',
-          ),
-          Message(
-            text:
-                '''Let's make a call here. Dictatorship. Can't decide by committee. It's ok either way guys.''',
-            user: _getUsers()[Random().nextInt(_getUsers().length)],
-            hour: '6:66 PM',
-          ),
-        ],
+        messages: _getMessages(),
         unreadCount: Random().nextInt(3),
-      );
-    }).toList();
+      ));
+    });
 
-    list.sort((a, b) => b.unreadCount.compareTo(a.unreadCount));
+    portfolio.sort((a, b) => b.unreadCount.compareTo(a.unreadCount));
 
-    return list;
+    return portfolio;
   }
 
   List<Company> _getCompanies() {
@@ -129,5 +84,98 @@ class HomeLocalDataSource {
       User(id: 6, name: 'Roger Deacon'),
       User(id: 7, name: 'Beth Taylor'),
     ];
+  }
+
+  List<Message> _getMessages() {
+    final messages = [
+      Message(
+        text:
+            '''Interesting. Maybe I'll try it again. I figured paypal was dead just waiting for someone to admit it.''',
+        user: _getUsers()[Random().nextInt(_getUsers().length)],
+        hour: '6:66 PM',
+        replies: [
+          Message(
+            text: '',
+            user: _getUsers()[Random().nextInt(_getUsers().length)],
+            hour: '',
+          ),
+        ],
+      ),
+      Message(
+        text: 'Especially these days',
+        user: _getUsers()[Random().nextInt(_getUsers().length)],
+        hour: '6:66 PM',
+      ),
+      Message(
+        text:
+            'Tech stocks up 5% holy moly *&ˆ*&ˆ*&ˆ. What a time to be alive. Who cares if its a bubble? Ride and roll baby! ⚡️⚡️⚡',
+        user: _getUsers()[Random().nextInt(_getUsers().length)],
+        hour: '6:66 PM',
+      ),
+      Message(
+        text:
+            '''Let's make a call here. João is a great mobile developer and I believe he's the best option for any startup that wants to use Flutter.''',
+        user: _getUsers()[Random().nextInt(_getUsers().length)],
+        hour: '6:66 PM',
+        reactions: [
+          Reaction('👏', [1, 3, 5]),
+          Reaction('🎉 ', [3, 5, 8]),
+          Reaction('👍🏽', [1, 2, 4, 3, 7]),
+        ],
+        replies: [
+          Message(
+            text: '',
+            user: _getUsers()[2],
+            hour: '',
+          ),
+          Message(
+            text: '',
+            user: _getUsers()[4],
+            hour: '',
+          ),
+          Message(
+            text: '',
+            user: _getUsers()[5],
+            hour: '',
+          ),
+          Message(
+            text: '',
+            user: _getUsers()[6],
+            hour: '',
+          ),
+        ],
+      ),
+      Message(
+        text:
+            '''The tech heavy Nasdaq under performed last week as we saw a rotation out of defensive tech stocks into shares more exposed to economic growth on the back of the vaccine news.''',
+        user: _getUsers()[Random().nextInt(_getUsers().length)],
+        hour: '6:66 PM',
+      ),
+      Message(
+        text: 'Bring in the Russian money pls. Comes with Vodka 💉 🍅🍹',
+        user: _getUsers()[Random().nextInt(_getUsers().length)],
+        hour: '6:66 PM',
+        reactions: [
+          Reaction('🍾', [1]),
+        ],
+        replies: [
+          Message(
+            text: '',
+            user: _getUsers()[4],
+            hour: '',
+          ),
+        ],
+      ),
+      Message(
+        text:
+            '''Let's make a call here. Dictatorship. Can't decide by committee. It's ok either way guys.''',
+        user: _getUsers()[Random().nextInt(_getUsers().length)],
+        hour: '6:66 PM',
+      ),
+    ];
+
+    messages.shuffle();
+
+    return messages;
   }
 }
