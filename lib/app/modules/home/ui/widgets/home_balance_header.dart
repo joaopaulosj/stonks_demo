@@ -1,6 +1,8 @@
 import 'package:demo_stonks/app/base/app_dimens.dart';
 import 'package:demo_stonks/app/base/app_strings.dart';
 import 'package:demo_stonks/app/modules/home/ui/controllers/home_controller.dart';
+import 'package:demo_stonks/app/modules/shared/widgets/arrow_icon_widget.dart';
+import 'package:demo_stonks/app/modules/shared/widgets/percent_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -34,9 +36,9 @@ class HomeBalanceHeader extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          _ArrowIcon(value: state.balance.todayPercent),
+                          ArrowIconWidget(value: state.balance.todayPercent),
                           SizedBox(width: 4.0),
-                          _PercentText(value: state.balance.todayPercent),
+                          PercentTextWidget(value: state.balance.todayPercent),
                         ],
                       )
                     ],
@@ -55,9 +57,9 @@ class HomeBalanceHeader extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          _ArrowIcon(value: state.balance.totalPercent),
+                          ArrowIconWidget(value: state.balance.totalPercent),
                           SizedBox(width: 4.0),
-                          _PercentText(value: state.balance.totalPercent),
+                          PercentTextWidget(value: state.balance.totalPercent),
                         ],
                       )
                     ],
@@ -92,45 +94,6 @@ class HomeBalanceHeader extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-}
-
-class _PercentText extends StatelessWidget {
-  const _PercentText({
-    Key key,
-    @required this.value,
-  }) : super(key: key);
-
-  final double value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      '${value.abs().toStringAsFixed(2)}%',
-      style: TextStyle(
-        color: value > 0 ? Colors.green : Colors.red,
-        fontSize: 16.0,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
-}
-
-class _ArrowIcon extends StatelessWidget {
-  const _ArrowIcon({
-    Key key,
-    @required this.value,
-  }) : super(key: key);
-
-  final double value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Icon(
-      value > 0 ? Icons.arrow_upward : Icons.arrow_downward,
-      size: 20.0,
-      color: value > 0 ? Colors.green : Colors.red,
     );
   }
 }

@@ -31,7 +31,7 @@ class AppStrings {
   }
 
   static const String chatTradeButton = 'Trade';
-  static const String chatMembersText = '18,923 members';
+  static String chatMembersText(int count) => '$count members';
   static const String chatUnread = 'Unread';
   static const String chatFieldHint = 'Type a Message';
 

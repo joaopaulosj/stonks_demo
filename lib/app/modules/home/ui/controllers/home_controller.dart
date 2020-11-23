@@ -7,6 +7,8 @@ import 'package:demo_stonks/app/modules/home/domain/usecases/get_balance_usecase
 import 'package:demo_stonks/app/modules/home/domain/usecases/get_portfolio_usecase.dart';
 import 'package:demo_stonks/app/modules/home/domain/usecases/get_top_posts_usecase.dart';
 import 'package:demo_stonks/app/modules/home/domain/usecases/get_user_usecase.dart';
+import 'package:demo_stonks/app/modules/home/ui/pages/chat_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -89,6 +91,10 @@ abstract class _HomeControllerBase with Store {
       type: type,
       values: (balanceState as BalanceState).balance.getValuesFromType(type),
     );
+  }
+
+  void onPortfolioClick(Portfolio portfolio) {
+    Modular.to.pushNamed(ChatPage.routeName, arguments: portfolio);
   }
 }
 

@@ -35,8 +35,12 @@ class HomePortfolio extends StatelessWidget {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: state.portfolio.length,
-                    itemBuilder: (_, index) =>
-                        _PortfolioItem(state.portfolio[index]),
+                    itemBuilder: (_, index) => _PortfolioItem(
+                      portfolio: state.portfolio[index],
+                      onClick: () => controller.onPortfolioClick(
+                        state.portfolio[index],
+                      ),
+                    ),
                   );
                 } else {
                   return Container();
@@ -53,71 +57,78 @@ class HomePortfolio extends StatelessWidget {
 
 class _PortfolioItem extends StatelessWidget {
   final Portfolio portfolio;
+  final VoidCallback onClick;
 
-  const _PortfolioItem(this.portfolio);
+  const _PortfolioItem({this.portfolio, this.onClick});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: kMarginDetail),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(kMarginSmall),
-            child: Image.asset(
-              portfolio.company.logo,
-              height: 32.0,
-              width: 32.0,
+    return InkWell(
+      onTap: onClick,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: kMarginDetail),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(kMarginSmall),
+              child: Image.asset(
+                portfolio.company.logo,
+                height: 32.0,
+                width: 32.0,
+              ),
             ),
-          ),
-          SizedBox(width: kMarginSmall),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      portfolio.company.name,
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(width: kMarginDetail),
-                    if (portfolio.unreadCount > 0)
-                      _UnreadWidget(portfolio.unreadCount),
-                    if (portfolio.unreadCount == 0)
-                      ClipOval(
+            SizedBox(width: kMarginSmall),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        portfolio.company.name,
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(width: kMarginDetail),
+                      if (portfolio.unreadCount > 0)
+                        _UnreadWidget(portfolio.unreadCount),
+                      if (portfolio.unreadCount == 0)
+                        ClipOval(
+                          child: Container(
+                            height: 4,
+                            width: 4,
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      Spacer(),
+                      IgnorePointer(
+                        ignoring: true,
                         child: Container(
-                          height: 4,
-                          width: 4,
-                          color: Colors.blueAccent,
+                          height: 20.0,
+                          width: 40.0,
+                          child: SimpleLineChart(portfolio.values),
                         ),
                       ),
-                    Spacer(),
-                    Container(
-                      height: 20.0,
-                      width: 40.0,
-                      child: SimpleLineChart(portfolio.values),
-                    ),
-                    SizedBox(width: kMarginDefault),
-                    _PercentValue(portfolio: portfolio),
-                  ],
-                ),
-                SizedBox(height: kMarginDetail),
-                Text(
-                  portfolio.messages.last.text,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: portfolio.unreadCount > 0
-                        ? FontWeight.w500
-                        : FontWeight.normal,
+                      SizedBox(width: kMarginDefault),
+                      _PercentValue(portfolio: portfolio),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                  SizedBox(height: kMarginDetail),
+                  Text(
+                    portfolio.messages.last.text,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: portfolio.unreadCount > 0
+                          ? FontWeight.w500
+                          : FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
