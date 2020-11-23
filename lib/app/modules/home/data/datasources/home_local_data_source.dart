@@ -22,14 +22,45 @@ class HomeLocalDataSource {
         company: company,
         values: _generateRandomValues(10),
         messages: [
-          Message(text: ''),
-          Message(text: ''),
-          Message(text: ''),
-          Message(text: ''),
-          Message(text: ''),
           Message(
             text:
-                'Lorem ipsum dolor sit amet consectetur dolor sit amet aldo aks dos as',
+                '''Interesting. Maybe I'll try it again. I figured paypal was dead just waiting for someone to admit it.''',
+            user: _getUsers()[Random().nextInt(_getUsers().length)],
+            hour: '6:66 PM',
+          ),
+          Message(
+            text: 'Especially these days',
+            user: _getUsers()[Random().nextInt(_getUsers().length)],
+            hour: '6:66 PM',
+          ),
+          Message(
+            text:
+                'Tech stocks up 5% holy moly *&ˆ*&ˆ*&ˆ. What a time to be alive. Who cares if its a bubble? Ride and roll baby! ⚡️⚡️⚡',
+            user: _getUsers()[Random().nextInt(_getUsers().length)],
+            hour: '6:66 PM',
+          ),
+          Message(
+            text: 'Bring in the Russian money pls. Comes with Vodka 💉 🍅🍹',
+            user: _getUsers()[Random().nextInt(_getUsers().length)],
+            hour: '6:66 PM',
+          ),
+          Message(
+            text:
+                '''Let's make a call here. João is a great mobile developer and the best option for any startup that uses Flutter.''',
+            user: _getUsers()[Random().nextInt(_getUsers().length)],
+            hour: '6:66 PM',
+          ),
+          Message(
+            text:
+                '''The tech heavy Nasdaq under performed last week as we saw a rotation out of defensive tech stocks into shares more exposed to economic growth on the back of the vaccine news.''',
+            user: _getUsers()[Random().nextInt(_getUsers().length)],
+            hour: '6:66 PM',
+          ),
+          Message(
+            text:
+                '''Let's make a call here. Dictatorship. Can't decide by committee. It's ok either way guys.''',
+            user: _getUsers()[Random().nextInt(_getUsers().length)],
+            hour: '6:66 PM',
           ),
         ],
         unreadCount: Random().nextInt(3),

@@ -4,6 +4,7 @@ class Message {
   final int id;
   final String text;
   final User user;
+  final String hour;
 
-  Message({this.id, this.text, this.user});
+  Message({this.id, this.text, this.user, this.hour});
 }

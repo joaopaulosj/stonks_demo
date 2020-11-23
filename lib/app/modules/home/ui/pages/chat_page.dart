@@ -1,6 +1,7 @@
 import 'package:demo_stonks/app/base/app_dimens.dart';
 import 'package:demo_stonks/app/base/app_strings.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/portfolio.dart';
+import 'package:demo_stonks/app/modules/home/ui/widgets/chat_message_widget.dart';
 import 'package:demo_stonks/app/modules/shared/widgets/arrow_icon_widget.dart';
 import 'package:demo_stonks/app/modules/shared/widgets/percent_text_widget.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class _ChatPageState extends State<ChatPage> {
         brightness: Brightness.light,
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 1.0,
+        centerTitle: false,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -104,7 +106,120 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ],
       ),
-      body: Center(),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.separated(
+              reverse: true,
+              itemCount: widget.portfolio.messages.length,
+              itemBuilder: (_, index) {
+                final message =
+                    widget.portfolio.messages.reversed.toList()[index];
+                return ChatMessageWidget(message);
+              },
+              separatorBuilder: (_, index) {
+                if (index == widget.portfolio.unreadCount - 1) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: kMarginSmall),
+                    child: Row(
+                      children: [
+                        SizedBox(width: kMarginDefault),
+                        Expanded(
+                          child: Container(
+                            height: 1,
+                            color: Colors.red.withOpacity(0.2),
+                          ),
+                        ),
+                        SizedBox(width: kMarginDefault),
+                        Text(
+                          AppStrings.chatUnread,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        SizedBox(width: kMarginDefault),
+                        Expanded(
+                          child: Container(
+                            height: 1,
+                            color: Colors.red.withOpacity(0.2),
+                          ),
+                        ),
+                        SizedBox(width: kMarginDefault),
+                      ],
+                    ),
+                  );
+                } else {
+                  return SizedBox.shrink();
+                }
+              },
+            ),
+          ),
+          _TextField(),
+        ],
+      ),
+    );
+  }
+}
+
+class _TextField extends StatelessWidget {
+  const _TextField({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(color: Colors.black.withOpacity(0.05), height: 1),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: AppStrings.chatFieldHint,
+                  alignLabelWithHint: true,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: kMarginDefault,
+                    vertical: kMarginSmall,
+                  ),
+                  labelStyle: TextStyle(
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        .color
+                        .withOpacity(0.7),
+                    fontWeight: FontWeight.normal,
+                  ),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(kMarginDefault),
+              child: Icon(
+                Icons.open_in_full_outlined,
+                size: 16,
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(kMarginDefault),
+          child: Row(
+            children: [
+              Icon(Icons.message),
+              SizedBox(width: kMarginDefault),
+              Icon(Icons.message),
+              SizedBox(width: kMarginDefault),
+              Icon(Icons.message),
+              Spacer(),
+              Icon(Icons.send),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
