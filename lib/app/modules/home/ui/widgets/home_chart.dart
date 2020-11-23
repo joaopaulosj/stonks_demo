@@ -22,7 +22,6 @@ class HomeChart extends StatelessWidget {
                   height: 200,
                   child: SimpleLineChart(state.values, endMargin: 48),
                 ),
-                SizedBox(height: kMarginDefault),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: ChartType.values
