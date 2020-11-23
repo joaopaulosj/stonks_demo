@@ -24,7 +24,10 @@ class HomeBuyingPower extends StatelessWidget {
                 InkWell(
                   onTap: () {},
                   child: Padding(
-                    padding: const EdgeInsets.all(kMarginDefault),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: kMarginSmall,
+                      horizontal: kMarginDefault,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

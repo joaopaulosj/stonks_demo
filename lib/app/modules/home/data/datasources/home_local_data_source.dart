@@ -4,6 +4,7 @@ import 'package:demo_stonks/app/modules/home/domain/models/balance.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/company.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/message.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/portfolio.dart';
+import 'package:demo_stonks/app/modules/home/domain/models/post.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/user.dart';
 
 class HomeLocalDataSource {
@@ -53,5 +54,31 @@ class HomeLocalDataSource {
     }
 
     return list;
+  }
+
+  List<Post> getTopPosts() {
+    return [
+      Post(
+        user: _getUsers()[Random().nextInt(_getUsers().length)],
+        hour: '2:18 PM',
+        text:
+            '''Tech stocks up 5% holy moly *&ˆ*&ˆ*&ˆ. What a time to be alive. Who cares if its a bubble? Ride and roll baby! ⚡️⚡️⚡️''',
+      ),
+      Post(
+        user: _getUsers()[Random().nextInt(_getUsers().length)],
+        hour: '2:18 PM',
+        text:
+            '''The tech heavy Nasdaq under performed last week as we saw a rotation out of defensive tech stocks into shares more exposed to economic growth on the back of the vaccine news. "Work from home” stocks were under pressure but recovered towards the end of the week.''',
+      ),
+    ];
+  }
+
+  List<User> _getUsers() {
+    return [
+      User(id: 1, name: 'John Doe'),
+      User(id: 2, name: 'Mary Ann'),
+      User(id: 3, name: 'John Doe'),
+      User(id: 4, name: 'John Doe'),
+    ];
   }
 }

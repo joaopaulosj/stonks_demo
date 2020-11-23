@@ -4,6 +4,7 @@ import 'package:demo_stonks/app/modules/home/ui/widgets/home_bottom_nav_bar.dart
 import 'package:demo_stonks/app/modules/home/ui/widgets/home_buying_power.dart';
 import 'package:demo_stonks/app/modules/home/ui/widgets/home_chart.dart';
 import 'package:demo_stonks/app/modules/home/ui/widgets/home_portfolio.dart';
+import 'package:demo_stonks/app/modules/home/ui/widgets/home_top_posts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -32,6 +33,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
             HomeChart(),
             HomeBuyingPower(),
             HomePortfolio(),
+            HomeTopPosts(),
           ],
         ),
       ),
