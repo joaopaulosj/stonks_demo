@@ -27,7 +27,7 @@ abstract class _ChatControllerBase with Store {
       id: portfolio.messages.length,
       text: text,
       user: getUserUsecase(),
-      hour: 'XXX',
+      date: DateTime.now(),
     );
     portfolio.messages.add(message);
     portfolio.unreadCount = 0;
