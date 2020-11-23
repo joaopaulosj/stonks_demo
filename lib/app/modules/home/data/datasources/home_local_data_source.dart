@@ -5,6 +5,7 @@ import 'package:demo_stonks/app/modules/home/domain/models/company.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/message.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/portfolio.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/post.dart';
+import 'package:demo_stonks/app/modules/home/domain/models/reaction.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/user.dart';
 
 class HomeLocalDataSource {
@@ -49,6 +50,11 @@ class HomeLocalDataSource {
                 '''Let's make a call here. João is a great mobile developer and the best option for any startup that uses Flutter.''',
             user: _getUsers()[Random().nextInt(_getUsers().length)],
             hour: '6:66 PM',
+            reactions: [
+              Reaction('👏', [1, 3, 5]),
+              Reaction('🎉 ', [3, 5, 8]),
+              Reaction('👍🏽', [1, 2, 4, 3, 7]),
+            ],
           ),
           Message(
             text:

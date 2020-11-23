@@ -119,33 +119,7 @@ class _ChatPageState extends State<ChatPage> {
               },
               separatorBuilder: (_, index) {
                 if (index == widget.portfolio.unreadCount - 1) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: kMarginSmall),
-                    child: Row(
-                      children: [
-                        SizedBox(width: kMarginDefault),
-                        Expanded(
-                          child: Container(
-                            height: 1,
-                            color: Colors.red.withOpacity(0.2),
-                          ),
-                        ),
-                        SizedBox(width: kMarginDefault),
-                        Text(
-                          AppStrings.chatUnread,
-                          style: TextStyle(color: Colors.red),
-                        ),
-                        SizedBox(width: kMarginDefault),
-                        Expanded(
-                          child: Container(
-                            height: 1,
-                            color: Colors.red.withOpacity(0.2),
-                          ),
-                        ),
-                        SizedBox(width: kMarginDefault),
-                      ],
-                    ),
-                  );
+                  return _UnreadSeparator();
                 } else {
                   return SizedBox.shrink();
                 }
@@ -153,6 +127,39 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
           _TextField(),
+        ],
+      ),
+    );
+  }
+}
+
+class _UnreadSeparator extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: kMarginSmall),
+      child: Row(
+        children: [
+          SizedBox(width: kMarginDefault),
+          Expanded(
+            child: Container(
+              height: 1,
+              color: Colors.red.withOpacity(0.2),
+            ),
+          ),
+          SizedBox(width: kMarginDefault),
+          Text(
+            AppStrings.chatUnread,
+            style: TextStyle(color: Colors.red),
+          ),
+          SizedBox(width: kMarginDefault),
+          Expanded(
+            child: Container(
+              height: 1,
+              color: Colors.red.withOpacity(0.2),
+            ),
+          ),
+          SizedBox(width: kMarginDefault),
         ],
       ),
     );
