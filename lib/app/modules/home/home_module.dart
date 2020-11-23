@@ -1,6 +1,8 @@
+import 'package:demo_stonks/app/modules/home/domain/models/portfolio.dart';
 import 'package:demo_stonks/app/modules/home/domain/usecases/get_portfolio_usecase.dart';
 import 'package:demo_stonks/app/modules/home/domain/usecases/get_top_posts_usecase.dart';
 import 'package:demo_stonks/app/modules/home/domain/usecases/get_user_usecase.dart';
+import 'package:demo_stonks/app/modules/home/ui/controllers/chat_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'data/datasources/home_local_data_source.dart';
@@ -18,6 +20,12 @@ class HomeModule extends ChildModule {
         Bind((i) => GetUserUsecase(repository: i.get())),
         Bind((i) => GetPortfolioUsecase(repository: i.get())),
         Bind((i) => GetTopPostsUsecase(repository: i.get())),
+        Bind(
+          (i) => ChatController(
+            portfolio: i.args.data as Portfolio,
+            getUserUsecase: i.get(),
+          ),
+        ),
         Bind(
           (i) => HomeController(
             getBalanceUsecase: i.get(),

@@ -9,7 +9,7 @@ class Portfolio {
   final Company company;
   final List<int> values;
   final List<Message> messages;
-  final int unreadCount;
+  int unreadCount;
   int membersCount;
   double balance;
 

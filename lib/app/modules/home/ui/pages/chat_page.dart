@@ -2,26 +2,24 @@ import 'dart:math';
 
 import 'package:demo_stonks/app/base/app_dimens.dart';
 import 'package:demo_stonks/app/base/app_strings.dart';
-import 'package:demo_stonks/app/modules/home/domain/models/portfolio.dart';
+import 'package:demo_stonks/app/modules/home/ui/controllers/chat_controller.dart';
 import 'package:demo_stonks/app/modules/home/ui/widgets/chat_message_widget.dart';
 import 'package:demo_stonks/app/modules/shared/widgets/arrow_icon_widget.dart';
 import 'package:demo_stonks/app/modules/shared/widgets/percent_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
   static const routeName = '/chat';
 
-  final Portfolio portfolio;
-
-  ChatPage(this.portfolio);
-
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatPageState extends ModularState<ChatPage, ChatController> {
   final _formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 2);
   var _showWarning = Random().nextInt(2) == 0;
 
@@ -68,7 +66,7 @@ class _ChatPageState extends State<ChatPage> {
             Row(
               children: [
                 Text(
-                  widget.portfolio.company.name,
+                  controller.portfolio.company.name,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
@@ -81,7 +79,7 @@ class _ChatPageState extends State<ChatPage> {
             ),
             SizedBox(height: kMarginDetail),
             Text(
-              AppStrings.chatMembersText(widget.portfolio.membersCount),
+              AppStrings.chatMembersText(controller.portfolio.membersCount),
               style: TextStyle(
                 color: Colors.black38,
                 fontSize: 14.0,
@@ -97,7 +95,7 @@ class _ChatPageState extends State<ChatPage> {
                 children: [
                   SizedBox(height: kMarginSmall),
                   Text(
-                    _formatCurrency.format(widget.portfolio.balance),
+                    _formatCurrency.format(controller.portfolio.balance),
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
@@ -107,9 +105,9 @@ class _ChatPageState extends State<ChatPage> {
                   SizedBox(height: kMarginDetail),
                   Row(
                     children: [
-                      ArrowIconWidget(value: widget.portfolio.percent),
+                      ArrowIconWidget(value: controller.portfolio.percent),
                       SizedBox(width: 4.0),
-                      PercentTextWidget(value: widget.portfolio.percent),
+                      PercentTextWidget(value: controller.portfolio.percent),
                     ],
                   )
                 ],
@@ -141,19 +139,28 @@ class _ChatPageState extends State<ChatPage> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.separated(
-              reverse: true,
-              itemCount: widget.portfolio.messages.length,
-              itemBuilder: (_, index) {
-                final message =
-                    widget.portfolio.messages.reversed.toList()[index];
-                return ChatMessageWidget(message);
-              },
-              separatorBuilder: (_, index) {
-                if (index == widget.portfolio.unreadCount - 1) {
-                  return _UnreadSeparator();
+            child: Observer(
+              builder: (context) {
+                final state = controller.messagesState;
+
+                if (state is MessagesState) {
+                  return ListView.separated(
+                    reverse: true,
+                    itemCount: state.messages.length,
+                    itemBuilder: (_, index) {
+                      final message = state.messages.reversed.toList()[index];
+                      return ChatMessageWidget(message);
+                    },
+                    separatorBuilder: (_, index) {
+                      if (index == controller.portfolio.unreadCount - 1) {
+                        return _UnreadSeparator();
+                      } else {
+                        return SizedBox.shrink();
+                      }
+                    },
+                  );
                 } else {
-                  return SizedBox.shrink();
+                  return Container();
                 }
               },
             ),
@@ -198,10 +205,14 @@ class _UnreadSeparator extends StatelessWidget {
   }
 }
 
-class _TextField extends StatelessWidget {
-  const _TextField({
-    Key key,
-  }) : super(key: key);
+class _TextField extends StatefulWidget {
+  @override
+  _TextFieldState createState() => _TextFieldState();
+}
+
+class _TextFieldState extends State<_TextField> {
+  final _fieldController = TextEditingController();
+  var _canSend = false;
 
   @override
   Widget build(BuildContext context) {
@@ -212,6 +223,12 @@ class _TextField extends StatelessWidget {
           children: [
             Expanded(
               child: TextField(
+                controller: _fieldController,
+                onChanged: (value) {
+                  setState(() {
+                    _canSend = value.isNotEmpty;
+                  });
+                },
                 decoration: InputDecoration(
                   hintText: AppStrings.chatFieldHint,
                   alignLabelWithHint: true,
@@ -245,9 +262,10 @@ class _TextField extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.all(kMarginDefault),
+          padding: const EdgeInsets.symmetric(vertical: kMarginSmall),
           child: Row(
             children: [
+              SizedBox(width: kMarginDefault),
               SvgPicture.asset(
                 'assets/icons/ic_mention.svg',
                 height: 24.0,
@@ -269,7 +287,28 @@ class _TextField extends StatelessWidget {
                 color: Colors.black87,
               ),
               Spacer(),
-              Icon(Icons.send),
+              InkWell(
+                onTap: () {
+                  if (_fieldController.text.isNotEmpty) {
+                    Modular.get<ChatController>().addMessage(
+                      _fieldController.text,
+                    );
+                    _fieldController.clear();
+                    FocusScope.of(context).unfocus();
+                    setState(() {
+                      _canSend = false;
+                    });
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(kMarginSmall),
+                  child: Icon(
+                    Icons.send,
+                    color: _canSend ? Colors.blueAccent : Colors.black38,
+                  ),
+                ),
+              ),
+              SizedBox(width: kMarginSmall),
             ],
           ),
         )
