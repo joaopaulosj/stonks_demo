@@ -43,6 +43,8 @@ class HomeAppBar extends StatelessWidget {
                     final state = controller.balanceState;
 
                     if (state is BalanceState) {
+                      final value = (state.balance.value * 100).toInt() % 100;
+
                       return RichText(
                         text: TextSpan(
                           children: [
@@ -57,8 +59,7 @@ class HomeAppBar extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text:
-                                  '.${(state.balance.value * 100).toInt() % 100}',
+                              text: '.${value < 10 ? '0' : ''}$value',
                               style: TextStyle(
                                 color: Colors.black38,
                                 fontSize: 20.0,

@@ -6,10 +6,7 @@ import 'package:flutter/foundation.dart';
 class Balance {
   final List<int> values;
 
-  Balance({@required this.values}) {
-    print('initial: ${values.first}');
-    print('final: ${values.last}');
-  }
+  Balance({@required this.values});
 
   List<int> getValuesFromType(ChartType type) {
     switch (type) {
@@ -51,5 +48,5 @@ class Balance {
 
   double get buyingPower => (value * 0.3).abs();
 
-  double get value => (values.first + totalValueDiff) + Random().nextDouble();
+  double get value => values.first + totalValueDiff + Random().nextDouble();
 }

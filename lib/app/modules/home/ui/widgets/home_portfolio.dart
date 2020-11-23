@@ -1,9 +1,9 @@
 import 'package:demo_stonks/app/base/app_dimens.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/portfolio.dart';
 import 'package:demo_stonks/app/modules/home/ui/controllers/home_controller.dart';
-import 'package:demo_stonks/app/modules/home/ui/widgets/home_bottom_nav_bar.dart';
 import 'package:demo_stonks/app/modules/home/ui/widgets/home_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePortfolio extends StatelessWidget {
@@ -26,7 +26,23 @@ class HomePortfolio extends StatelessWidget {
               ),
             ),
             SizedBox(height: kMarginSmall),
-            ...controller.getPortfolio.map((e) => _PortfolioItem(e)).toList(),
+            Observer(
+              builder: (context) {
+                final state = controller.portfolioState;
+
+                if (state is PortfolioState) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: state.portfolio.length,
+                    itemBuilder: (_, index) =>
+                        _PortfolioItem(state.portfolio[index]),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
             SizedBox(height: kMarginDefault),
           ],
         ),
@@ -69,7 +85,7 @@ class _PortfolioItem extends StatelessWidget {
                     ),
                     SizedBox(width: kMarginDetail),
                     if (portfolio.unreadCount > 0)
-                      UnreadWidget(portfolio.unreadCount),
+                      _UnreadWidget(portfolio.unreadCount),
                     if (portfolio.unreadCount == 0)
                       ClipOval(
                         child: Container(
@@ -144,6 +160,35 @@ class _PercentValue extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _UnreadWidget extends StatelessWidget {
+  final int count;
+
+  const _UnreadWidget(this.count);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipOval(
+      child: Container(
+        color: Colors.blueAccent,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 1.0,
+            horizontal: 5.0,
+          ),
+          child: Text(
+            '$count',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
       ),
     );

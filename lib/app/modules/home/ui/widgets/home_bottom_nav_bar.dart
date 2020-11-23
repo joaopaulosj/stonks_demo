@@ -2,6 +2,7 @@ import 'package:demo_stonks/app/base/app_dimens.dart';
 import 'package:demo_stonks/app/base/app_strings.dart';
 import 'package:demo_stonks/app/modules/home/ui/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -57,7 +58,7 @@ class BottomNavBar extends StatelessWidget {
                 Positioned(
                   top: 0,
                   right: 0,
-                  child: UnreadWidget(8),
+                  child: _UnreadWidget(),
                 )
               ],
             ),
@@ -78,13 +79,12 @@ class BottomNavBar extends StatelessWidget {
   }
 }
 
-class UnreadWidget extends StatelessWidget {
-  final int count;
-
-  const UnreadWidget(this.count);
+class _UnreadWidget extends StatelessWidget {
+  const _UnreadWidget();
 
   @override
   Widget build(BuildContext context) {
+    final controller = Modular.get<HomeController>();
     return ClipOval(
       child: Container(
         color: Colors.blueAccent,
@@ -93,13 +93,29 @@ class UnreadWidget extends StatelessWidget {
             vertical: 1.0,
             horizontal: 5.0,
           ),
-          child: Text(
-            '$count',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 12.0,
-              fontWeight: FontWeight.w500,
-            ),
+          child: Observer(
+            builder: (context) {
+              final state = controller.portfolioState;
+
+              if (state is PortfolioState) {
+                var unread = 0;
+
+                state.portfolio.forEach((element) {
+                  unread += element.unreadCount;
+                });
+
+                return Text(
+                  '$unread',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                );
+              } else {
+                return SizedBox.shrink();
+              }
+            },
           ),
         ),
       ),

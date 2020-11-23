@@ -17,19 +17,28 @@ class HomeLocalDataSource {
   }
 
   List<Portfolio> getPortfolio() {
-    return _getCompanies().map((company) {
+    final list = _getCompanies().map((company) {
       return Portfolio(
         company: company,
         values: _generateRandomValues(10),
         messages: [
-          Message(text: 'First'),
+          Message(text: ''),
+          Message(text: ''),
+          Message(text: ''),
+          Message(text: ''),
+          Message(text: ''),
           Message(
             text:
                 'Lorem ipsum dolor sit amet consectetur dolor sit amet aldo aks dos as',
           ),
         ],
+        unreadCount: Random().nextInt(3),
       );
     }).toList();
+
+    list.sort((a, b) => b.unreadCount.compareTo(a.unreadCount));
+
+    return list;
   }
 
   List<Company> _getCompanies() {
@@ -77,8 +86,11 @@ class HomeLocalDataSource {
     return [
       User(id: 1, name: 'John Doe'),
       User(id: 2, name: 'Mary Ann'),
-      User(id: 3, name: 'John Doe'),
-      User(id: 4, name: 'John Doe'),
+      User(id: 3, name: 'Adam Jones'),
+      User(id: 4, name: 'Willian Stuart'),
+      User(id: 5, name: 'Robert May'),
+      User(id: 6, name: 'Roger Deacon'),
+      User(id: 7, name: 'Beth Taylor'),
     ];
   }
 }

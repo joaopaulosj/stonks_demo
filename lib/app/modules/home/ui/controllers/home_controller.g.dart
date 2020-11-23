@@ -9,7 +9,9 @@ part of 'home_controller.dart';
 final $HomeController = BindInject(
   (i) => HomeController(
       getBalanceUsecase: i<GetBalanceUsecase>(),
-      getUserUsecase: i<GetUserUsecase>()),
+      getUserUsecase: i<GetUserUsecase>(),
+      getPortfolioUsecase: i<GetPortfolioUsecase>(),
+      getTopPostsUsecase: i<GetTopPostsUsecase>()),
   singleton: true,
   lazy: true,
 );
@@ -66,12 +68,44 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$portfolioStateAtom = Atom(name: '_HomeControllerBase.portfolioState');
+
+  @override
+  UIState get portfolioState {
+    _$portfolioStateAtom.reportRead();
+    return super.portfolioState;
+  }
+
+  @override
+  set portfolioState(UIState value) {
+    _$portfolioStateAtom.reportWrite(value, super.portfolioState, () {
+      super.portfolioState = value;
+    });
+  }
+
+  final _$topPostsStateAtom = Atom(name: '_HomeControllerBase.topPostsState');
+
+  @override
+  UIState get topPostsState {
+    _$topPostsStateAtom.reportRead();
+    return super.topPostsState;
+  }
+
+  @override
+  set topPostsState(UIState value) {
+    _$topPostsStateAtom.reportWrite(value, super.topPostsState, () {
+      super.topPostsState = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 balanceState: ${balanceState},
 userState: ${userState},
-chartState: ${chartState}
+chartState: ${chartState},
+portfolioState: ${portfolioState},
+topPostsState: ${topPostsState}
     ''';
   }
 }

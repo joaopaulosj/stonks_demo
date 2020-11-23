@@ -3,6 +3,7 @@ import 'package:demo_stonks/app/base/app_strings.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/post.dart';
 import 'package:demo_stonks/app/modules/home/ui/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeTopPosts extends StatelessWidget {
@@ -24,7 +25,22 @@ class HomeTopPosts extends StatelessWidget {
                 fontSize: 18.0,
               ),
             ),
-            ...controller.getTopPosts.map((e) => _TopPostItem(e)).toList(),
+            Observer(
+              builder: (context) {
+                final state = controller.topPostsState;
+
+                if (state is TopPostsState) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: state.posts.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (_, index) => _TopPostItem(state.posts[index]),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
             SizedBox(height: kMarginDefault),
           ],
         ),

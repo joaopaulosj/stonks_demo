@@ -20,7 +20,7 @@ class HomeChart extends StatelessWidget {
               children: [
                 Container(
                   height: 200,
-                  child: SimpleLineChart(state.values, endMargin: 32),
+                  child: SimpleLineChart(state.values, endMargin: 48),
                 ),
                 SizedBox(height: kMarginDefault),
                 Row(

@@ -38,10 +38,18 @@ abstract class _HomeControllerBase with Store {
   @observable
   UIState chartState = InitialState();
 
+  @observable
+  UIState portfolioState = InitialState();
+
+  @observable
+  UIState topPostsState = InitialState();
+
   void onInit() {
     _loadBalance();
     _loadUser();
     _loadChart();
+    _loadPortfolio();
+    _loadTopPosts();
   }
 
   void _loadBalance() {
@@ -66,16 +74,22 @@ abstract class _HomeControllerBase with Store {
     }
   }
 
+  void _loadPortfolio() {
+    final portfolio = getPortfolioUsecase();
+    portfolioState = PortfolioState(portfolio);
+  }
+
+  void _loadTopPosts() {
+    final posts = getTopPostsUsecase();
+    topPostsState = TopPostsState(posts);
+  }
+
   void onChartTypeClicked(ChartType type) {
     chartState = ChartState(
       type: type,
       values: (balanceState as BalanceState).balance.getValuesFromType(type),
     );
   }
-
-  List<Portfolio> get getPortfolio => getPortfolioUsecase();
-
-  List<Post> get getTopPosts => getTopPostsUsecase();
 }
 
 class BalanceState implements UIState {
@@ -88,6 +102,18 @@ class UserState implements UIState {
   final User user;
 
   UserState(this.user);
+}
+
+class PortfolioState implements UIState {
+  final List<Portfolio> portfolio;
+
+  PortfolioState(this.portfolio);
+}
+
+class TopPostsState implements UIState {
+  final List<Post> posts;
+
+  TopPostsState(this.posts);
 }
 
 class ChartState implements UIState {
