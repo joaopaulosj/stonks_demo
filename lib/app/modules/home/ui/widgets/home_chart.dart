@@ -18,10 +18,13 @@ class HomeChart extends StatelessWidget {
           if (state is ChartState) {
             return Column(
               children: [
-                Container(
-                  height: 200,
-                  child: SimpleLineChart(state.values, endMargin: 48),
+                IgnorePointer(
+                  child: Container(
+                    height: 200,
+                    child: SimpleLineChart(state.values, endMargin: 48),
+                  ),
                 ),
+                SizedBox(height: kMarginSmall),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: ChartType.values

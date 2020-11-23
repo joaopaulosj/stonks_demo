@@ -11,6 +11,9 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      onTap: (index) {
+        if (index == 0) controller.onInit();
+      },
       unselectedItemColor: Colors.black38,
       selectedItemColor: Colors.blueAccent,
       showUnselectedLabels: true,
