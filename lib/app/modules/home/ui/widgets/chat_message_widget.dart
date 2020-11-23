@@ -14,65 +14,88 @@ class ChatMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: kMarginDefault,
-        vertical: kMarginSmall,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipOval(
-            child: Image.asset(
-              message.user.picture,
-              height: 32.0,
-              width: 32.0,
+    return InkWell(
+      onLongPress: () {
+        showDialog(
+          context: context,
+          builder: (_) => Dialog(
+            insetPadding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.all(kMarginDefault),
+              child: EmojiKeyboard(
+                onEmojiPressed: (emoji) {
+                  Modular.get<ChatController>().addReaction(
+                    message,
+                    emoji.emoji,
+                  );
+                  Navigator.pop(context);
+                },
+              ),
             ),
           ),
-          SizedBox(width: kMarginDefault),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      message.user.name,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
-                      ),
-                    ),
-                    SizedBox(width: kMarginDetail),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 1.0),
-                      child: Text(
-                        message.hour,
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: kMarginDefault,
+          vertical: kMarginSmall,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipOval(
+              child: Image.asset(
+                message.user.picture,
+                height: 32.0,
+                width: 32.0,
+              ),
+            ),
+            SizedBox(width: kMarginDefault),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        message.user.name,
                         style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: 10.0,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Text(
-                  message.text,
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16.0,
+                      SizedBox(width: kMarginDetail),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 1.0),
+                        child: Text(
+                          message.hour,
+                          style: TextStyle(
+                            color: Colors.black38,
+                            fontSize: 10.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(height: kMarginSmall),
-                if (message.reactions?.isNotEmpty ?? false)
-                  _Reactions(message: message),
-                if (message.replies.isNotEmpty) _Replies(message: message)
-              ],
-            ),
-          )
-        ],
+                  Text(
+                    message.text,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  SizedBox(height: kMarginSmall),
+                  if (message.reactions?.isNotEmpty ?? false)
+                    _Reactions(message: message),
+                  if (message.replies.isNotEmpty) _Replies(message: message)
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

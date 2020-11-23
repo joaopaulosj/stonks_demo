@@ -16,7 +16,9 @@ class Message {
     this.hour,
     this.reactions,
     this.replies = const [],
-  });
+  }) {
+    this.reactions = reactions ?? [];
+  }
 
   List<Reaction> getSortedReactions() {
     reactions.removeWhere((e) => e.userIds.isEmpty);

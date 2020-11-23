@@ -51,7 +51,7 @@ abstract class _ChatControllerBase with Store {
   }
 
   void addReaction(Message message, String emoji) {
-    final findReaction = message.reactions.firstWhere(
+    final findReaction = message.reactions?.firstWhere(
       (element) => element.emoji == emoji,
       orElse: () => null,
     );
