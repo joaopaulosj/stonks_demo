@@ -33,6 +33,7 @@ class HomeChart extends StatelessWidget {
                           ))
                       .toList(),
                 ),
+                SizedBox(height: kMarginDefault),
               ],
             );
           } else {

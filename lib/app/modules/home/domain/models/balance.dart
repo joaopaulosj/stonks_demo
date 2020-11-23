@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:demo_stonks/app/modules/home/ui/controllers/home_controller.dart';
 import 'package:flutter/foundation.dart';
 
@@ -47,7 +49,7 @@ class Balance {
 
   double get totalValueDiff => (values.last - values.first).toDouble();
 
-  double get buyingPower => totalValueDiff * 0.3;
+  double get buyingPower => (value * 0.3).abs();
 
-  double get value => values.first + totalValueDiff;
+  double get value => (values.first + totalValueDiff) + Random().nextDouble();
 }
