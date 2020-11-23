@@ -2,7 +2,9 @@ import 'package:demo_stonks/app/base/app_dimens.dart';
 import 'package:demo_stonks/app/base/app_strings.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/message.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/reaction.dart';
+import 'package:demo_stonks/app/modules/home/ui/controllers/chat_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class ChatMessageWidget extends StatelessWidget {
   final Message message;
@@ -155,7 +157,15 @@ class _Reactions extends StatelessWidget {
         ...message.getSortedReactions().map((e) {
           return Padding(
             padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
-            child: ReactionWidget(e),
+            child: ReactionWidget(
+              reaction: e,
+              onClick: () {
+                Modular.get<ChatController>().onReactionClicked(
+                  message.id,
+                  e,
+                );
+              },
+            ),
           );
         }).toList(),
         AddEmojiWidget(),
@@ -166,13 +176,14 @@ class _Reactions extends StatelessWidget {
 
 class ReactionWidget extends StatelessWidget {
   final Reaction reaction;
+  final VoidCallback onClick;
 
-  ReactionWidget(this.reaction);
+  ReactionWidget({this.reaction, this.onClick});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onClick,
       child: Container(
         decoration: BoxDecoration(
           color: reaction.isSelected

@@ -119,7 +119,7 @@ class HomeLocalDataSource {
         hour: '6:66 PM',
         reactions: [
           Reaction('👏', [1, 3, 5]),
-          Reaction('🎉 ', [3, 5, 8]),
+          Reaction('🎉 ', [3, 5, 6]),
           Reaction('👍🏽', [1, 2, 4, 3, 7]),
         ],
         replies: [
