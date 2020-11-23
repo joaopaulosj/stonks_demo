@@ -50,6 +50,24 @@ abstract class _ChatControllerBase with Store {
     _updateState();
   }
 
+  void addReaction(Message message, String emoji) {
+    final findReaction = message.reactions.firstWhere(
+      (element) => element.emoji == emoji,
+      orElse: () => null,
+    );
+
+    if (findReaction != null) {
+      onReactionClicked(message.id, findReaction);
+    } else {
+      final reaction = Reaction(emoji, [getUserUsecase().id]);
+      portfolio.messages
+          ?.firstWhere((msg) => msg.id == message.id)
+          ?.reactions
+          ?.add(reaction);
+      _updateState();
+    }
+  }
+
   void _updateState() {
     messagesState = MessagesState(portfolio.messages);
   }

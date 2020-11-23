@@ -89,6 +89,7 @@ class HomeLocalDataSource {
   List<Message> _getMessages() {
     final messages = [
       Message(
+        id: 0,
         text:
             '''Interesting. Maybe I'll try it again. I figured paypal was dead just waiting for someone to admit it.''',
         user: _getUsers()[Random().nextInt(_getUsers().length)],
@@ -102,17 +103,20 @@ class HomeLocalDataSource {
         ],
       ),
       Message(
+        id: 1,
         text: 'Especially these days',
         user: _getUsers()[Random().nextInt(_getUsers().length)],
         hour: '6:66 PM',
       ),
       Message(
+        id: 2,
         text:
             'Tech stocks up 5% holy moly *&ˆ*&ˆ*&ˆ. What a time to be alive. Who cares if its a bubble? Ride and roll baby! ⚡️⚡️⚡',
         user: _getUsers()[Random().nextInt(_getUsers().length)],
         hour: '6:66 PM',
       ),
       Message(
+        id: 3,
         text:
             '''Let's make a call here. João is a great mobile developer and I believe he's the best option for any startup that wants to use Flutter.''',
         user: _getUsers()[Random().nextInt(_getUsers().length)],
@@ -146,12 +150,14 @@ class HomeLocalDataSource {
         ],
       ),
       Message(
+        id: 4,
         text:
             '''The tech heavy Nasdaq under performed last week as we saw a rotation out of defensive tech stocks into shares more exposed to economic growth on the back of the vaccine news.''',
         user: _getUsers()[Random().nextInt(_getUsers().length)],
         hour: '6:66 PM',
       ),
       Message(
+        id: 5,
         text: 'Bring in the Russian money pls. Comes with Vodka 💉 🍅🍹',
         user: _getUsers()[Random().nextInt(_getUsers().length)],
         hour: '6:66 PM',
@@ -167,6 +173,7 @@ class HomeLocalDataSource {
         ],
       ),
       Message(
+        id: 6,
         text:
             '''Let's make a call here. Dictatorship. Can't decide by committee. It's ok either way guys.''',
         user: _getUsers()[Random().nextInt(_getUsers().length)],

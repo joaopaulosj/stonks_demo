@@ -224,6 +224,8 @@ class _TextFieldState extends State<_TextField> {
             Expanded(
               child: TextField(
                 controller: _fieldController,
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.sentences,
                 onChanged: (value) {
                   setState(() {
                     _canSend = value.isNotEmpty;

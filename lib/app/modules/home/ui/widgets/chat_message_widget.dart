@@ -3,6 +3,7 @@ import 'package:demo_stonks/app/base/app_strings.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/message.dart';
 import 'package:demo_stonks/app/modules/home/domain/models/reaction.dart';
 import 'package:demo_stonks/app/modules/home/ui/controllers/chat_controller.dart';
+import 'package:emoji_keyboard/emoji_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -168,7 +169,27 @@ class _Reactions extends StatelessWidget {
             ),
           );
         }).toList(),
-        AddEmojiWidget(),
+        AddEmojiWidget(onClick: () {
+          showDialog(
+            context: context,
+            builder: (_) => Dialog(
+              insetPadding: EdgeInsets.zero,
+              backgroundColor: Colors.transparent,
+              child: Padding(
+                padding: const EdgeInsets.all(kMarginDefault),
+                child: EmojiKeyboard(
+                  onEmojiPressed: (emoji) {
+                    Modular.get<ChatController>().addReaction(
+                      message,
+                      emoji.emoji,
+                    );
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ),
+          );
+        }),
       ],
     );
   }
@@ -217,11 +238,15 @@ class ReactionWidget extends StatelessWidget {
 }
 
 class AddEmojiWidget extends StatelessWidget {
+  final VoidCallback onClick;
+
+  AddEmojiWidget({this.onClick});
+
   @override
   Widget build(BuildContext context) {
     return ClipOval(
       child: InkWell(
-        onTap: () {},
+        onTap: onClick,
         child: Container(
           height: 30,
           width: 30,

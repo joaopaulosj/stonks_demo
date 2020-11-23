@@ -19,6 +19,7 @@ class Message {
   });
 
   List<Reaction> getSortedReactions() {
+    reactions.removeWhere((e) => e.userIds.isEmpty);
     reactions.sort((a, b) => b.count.compareTo(a.count));
     return reactions;
   }
